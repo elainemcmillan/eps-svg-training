@@ -520,481 +520,55 @@ details[open] summary::after{content:'－';color:var(--accent);}
 
 <!-- ═══ 3.5 PROMPTS ═══ -->
 <section id="prompts">
-  <h2><span class="icon">💬</span>Prompts — Fairfield Inn &amp; Suites Calm Era Pipeline</h2>
-  <p>This package contains everything needed to process Fairfield Inn &amp; Suites "Calm" era variable signs from MSDQ to finished artwork. The pipeline has 4 stages. Expand any prompt below and use the Copy button to send it to Cowork or Claude Code.</p>
-
-  <table class="stage-table">
-    <thead>
-      <tr><th>Stage</th><th>Who</th><th>Tool</th><th>What</th></tr>
-    </thead>
-    <tbody>
-      <tr><td>1</td><td>Elaine</td><td>Cowork</td><td>Master session — resolve open questions, generate processing cards</td></tr>
-      <tr><td>2</td><td>Team members</td><td>Cowork</td><td>Pick up a processing card, generate artwork per spec</td></tr>
-      <tr><td>3</td><td>Claude Code</td><td>Claude Code</td><td>Batch-process all static signs</td></tr>
-      <tr><td>4</td><td>Elaine</td><td>Cowork</td><td>QA pass — validate outputs against dictionary</td></tr>
-    </tbody>
-  </table>
-
-  <h3>Brand specs (apply to all prompts unless overridden)</h3>
-  <div class="spec-grid">
-    <div class="spec-item"><strong>Brand</strong>Fairfield Inn &amp; Suites</div>
-    <div class="spec-item"><strong>Era</strong>Calm</div>
-    <div class="spec-item"><strong>Colourway</strong>Single (Rowmark = 2)</div>
-    <div class="spec-item"><strong>Primary Font</strong>Arial, Reg.</div>
-    <div class="spec-item"><strong>Stairwell Font</strong>Swis721 Cn BT / Swiss 721 Md BT</div>
-    <div class="spec-item"><strong>FEP Font (03B)</strong>Hurme Geometric Sans 3</div>
-    <div class="spec-item"><strong>Copy Color</strong>S2-24-1-C Black</div>
-    <div class="spec-item"><strong>FEP Red</strong>PMS 485C</div>
-    <div class="spec-item"><strong>Fire Evac Red</strong>TP-141-1-H Fire Red</div>
-    <div class="spec-item"><strong>FEP BG</strong>PMS 12-0804 TPX Cloud Cream</div>
-    <div class="spec-item"><strong>Braille (PP)</strong>QAD# 700808 Clear Bead</div>
-    <div class="spec-item"><strong>Braille (Rowmark)</strong>QAD# 703143 Silver Bead</div>
-  </div>
+  <h2><span class="icon">💬</span>Prompts — Team Member Workflow</h2>
+  <p>When you're assigned a processing card by your project manager, use the prompt below. Paste your card content into the placeholder, fill in the file paths, and send it to Cowork. The prompt is brand-agnostic — the card itself carries all brand, era, and substrate specs.</p>
 
   <details class="prompt-block" open>
-    <summary><span class="prompt-num">1</span>Master Session<span class="prompt-who">Elaine · Cowork</span></summary>
+    <summary><span class="prompt-num">1</span>Team Member Processing<span class="prompt-who">Team · Cowork</span></summary>
     <div class="prompt-body">
-      <p class="purpose">Purpose: Walk through each variable group once. Resolve any ambiguity. Then package resolved specs into self-contained processing cards that team members can execute without questions.</p>
+      <p class="purpose">Purpose: Process one variable sign group for a property order using the processing card your project manager gave you. Fill in every placeholder in square brackets before sending.</p>
       <div class="prompt-actions"><button class="prompt-copy" data-target="prompt-1">Copy prompt</button></div>
-      <pre class="prompt-code" id="prompt-1">You are helping me prepare processing cards for the Fairfield Inn &amp; Suites "Calm" era signage program.
-
-I have already built a complete sign type dictionary (attached). It covers 104 MSDQ pages, 191 workbook SKUs, and classifies every sign as static, variable, or mixed.
-
-Your job in this session:
-1. Walk me through each of the 31 variable sign groups listed below
-2. For each group, confirm the variable fields, source of truth, and any edge cases
-3. Once confirmed, package each group into a standalone "Processing Card" that a team member can pick up and execute with zero additional questions
-
-## Brand Specs (apply to all cards unless overridden)
-- Brand: Fairfield Inn &amp; Suites
-- Era: Calm
-- Colourway: Single (no variants) — EXCEPTION: Rowmark items have 2 colorways
-- Primary font: Arial, Reg.
-- Stairwell font: 1" Swis721 Cn BT Bold / 1-1/2" Swis721 Cn BT Bold / 6" Swiss 721 Md BT Medium (code requirement — different from package font)
-- FEP font (Line 03B): Hurme Geometric Sans 3, Bold / Reg
-- Copy color: S2-24-1-C Black (most signs)
-- FEP exit arrow/dot: PMS 485C Red
-- Fire evac arrow: TP-141-1-H Fire Red
-- Background (FEP/inserts): PMS 12-0804 TPX Cloud Cream
-- Braille (Photopolymer): QAD# 700808 Clear Bead Braille
-- Braille (Rowmark): QAD# 703143 Silver Bead Braille, #311-401A Black
-- MSDQ is source of truth for dimensions and DIGIT codes
-
-## Variable Groups to Process (31 total)
-
-### COMPLEX (do these first — most decisions needed)
-
-1. **STR-LG** — Stairwell Large (12×18) — Lines 43
-   - SKUs: 3017 (with star ★, exit discharge), 3019 (without star)
-   - Phosphorescent vinyl on clear acrylic
-   - Fields: Stair letter (A/B), level number (large), direction text ("DOWN TO LEVEL 1 FOR EXIT DISCHARGE 1 THROUGH 4"), arrow direction, star (★ on exit discharge only)
-   - Font: 1-1/2" Swis721 Cn BT Bold, 1" Swis721 Cn BT Bold, 6" Swiss 721 Md BT Medium
-   - Stair A and Stair B faces shown on same MSDQ page
-
-2. **STR-SM** — Stairwell Level ID (7⅞×2⅞) — Line 42
-   - SKUs: 3005–3015 (Levels 1–5 + Custom)
-   - Photopolymer with clear bead braille
-   - Fields: Level number, star (★ on exit discharge level only)
-   - Font: 1" Swis721 Cn BT Bold
-   - 5 pre-set levels + 1 custom
-
-3. **DIR** — Directional FF19DR (8 sizes) — Lines 48–55
-   - SKUs: 3031–3051 (11 SKUs across 8 sign type codes)
-   - Fields: Line count (1–12 lines), directional copy per line, arrow direction per line
-   - 8 size variants: 8⅞×5⅝, 8⅞×7⅞, 12×5⅝, 12×7⅞, 12×10⅛, 12×12⅜, 12×14⅝, 12×16⅞
-   - Same Alumasteel/Sintra construction as room IDs
-
-4. **FEP-PETG** — Floor Evacuation Plan PETG (2 sizes) — Lines 03A/03B
-   - SKUs: 2866 (15¾×10), 2868 (23×10)
-   - Manufactured at Moti
-   - Fields: Floor plan/map (custom artwork per property), room numbers, stair &amp; exit labels, exit arrows (PMS 485C Red), "You Are Here" dots
-   - Background: PMS 12-0804 TPX Cloud Cream (reverse print)
-   - Line 03A font: Arial Reg. / Line 03B font: Hurme Geometric Sans 3 Bold/Reg
-
-5. **FEP-ALU** — Fire Evacuation Plan Alumasteel (7×10¼) — Line 38
-   - SKUs: 2989 (Floor 1 variant), 2991 (Upper floors variant)
-   - Fields: Floor plan/map, stair &amp; exit labels, exit arrow (TP-141-1-H Fire Red), "You Are Here" dot
-   - 2 layout variants: Floor 1 (above elevator, 1 location) vs Upper Floors (above elevator, 2+ locations)
-
-### MEDIUM (structured fields, clear rules)
-
-6. **RMN** — Room Number (4×4) — Line 02
-   - SKU: 2864
-   - Fields: Room number (custom per room)
-   - Alumasteel face on woodgrain Sintra backer
-   - Rowmark copy + silver bead braille
-
-7. **ELE** — Elevator ID (2¾×3½) — Line 11
-   - SKUs: 2890 (Elevator 1 ★ exit discharge), 2892 (Elevator 2), 2894 (Elevator 3)
-   - Fields: Elevator number, star (★ on exit discharge elevator only)
-
-8. **OWN** — Ownership (8×10) — Line 21
-   - SKU: 2913
-   - Fields: Owner name, operator name (custom text block)
-
-9. **MOD** — Manager on Duty (2 sizes) — Lines 22/23
-   - SKUs: 2915 (10½×2¾ sign), 2917 (10×1⅛ insert strip)
-   - Fields: Manager name
-
-10. **LAW** — Law Rate Card Insert (2 sizes) — Lines 04A/04B
-    - SKUs: 90190 (4⅜×11¾), 2872 (6¾×9)
-    - Paper inserts, manufactured at Moti
-    - Fields: Law/rate card text (property-specific legal/rate content)
-
-11. **FDM** — Food Menu (8½×11) — Line 25
-    - SKU: 90183
-    - Paper insert, manufactured at Moti
-    - Fields: Menu content (property-specific)
-
-12. **INS-MTG** — Meeting Room Insert Holder (2 sizes) — Lines 34A–34D
-    - SKUs: 2971 (7¼×12¼), 90187 (8½×15½)
-    - Single custom SKU per size — MSDQ page shows 6 stamp variants but consolidated to one custom
-    - Fields: Meeting room name
-
-13. **COM-6** — Address Numbers (6" height) — Line 70
-    - SKU: 3103
-    - Fields: Address number set (property-specific)
-    - MAP-923-MA Black aluminum
-
-14. **CIA** — Acrylic Copy Large (9×47) — Line 80
-    - SKU: 90205
-    - Fields: Inspirational/motivational text (custom)
-    - MAP-18249-MA Med. Gray
-
-### SIMPLE (1–2 field text swap — batch these)
-
-15. **INF-SYM** (3×3) — SKU 2880 — Custom symbol/copy
-16. **KEY-SM** (3¼×2⅛) — SKUs 2888, 3003 — Custom key card info text
-17. **INF-EP** (8×5) — SKU 2898 — Custom elevator permit info text
-18. **CLR** (60×10) — SKU 2908 — Custom clearance height text
-19. **INF-7x5** (7×5) — SKU 2925 — Custom informational text
-20. **IDS-9x6** (9×6 interior) — SKU 2943 — Custom room ID text + braille
-21. **EXT-9x6** (9×6 exterior) — SKU 2949 — Custom exterior room ID text
-22. **IDS-11x6** (11×6) — SKU 2955 — Custom room ID text + braille
-23. **HOR** (12×8) — SKU 2963 — Custom hours/informational text
-24. **MAX** (9×6) — SKU 2973 — Custom maximum occupancy number
-25. **INF-9x6** (9×6 interior) — SKUs 2987, 3025 — Custom informational text
-26. **PRO** (8⅞×8) — SKU 3029 — Custom projection sign text
-27. **EXT-HOR** (12×8 exterior) — SKU 3057 — Custom exterior hours text
-28. **ACC** (9×6) — SKUs 3107, 3109 — Custom accessible entrance info
-29. **INF-5x1.5** (5×1½) — SKU 3117 — Custom small informational text
-30. **IDS-ACR-SM** (4¾×2⅜) — SKU 3127 — Custom acrylic copy + braille strip
-31. **INF-TINY** (2½×¾ and 6×4) — SKUs 3147, 3151 — Custom tiny informational text
-
-## Processing Card Format
-
-For each group, produce a card with this exact structure:
-
----
-### [GROUP CODE] — [Sign Name]
-**SKU(s):** [list]
-**MSDQ Line(s):** [list]
-**Size(s):** [dimensions]
-**Substrate:** [material spec from dictionary]
-**Font:** [font, size, weight]
-**Copy Color:** [color code]
-**Braille:** [Yes/No — if yes, spec]
-
-**Variable Fields:**
-1. [Field name] — [what it is, where it comes from, any constraints]
-2. [Field name] — ...
-
-**Rules:**
-- [Any conditional logic — star placement, arrow direction, etc.]
-
-**Source artwork:** [EPS filename from MSDQ DIGIT field]
-**Routing:** [In-house / Moti]
----
-
-## Workflow
-
-Start with the 5 complex groups. Ask me to confirm each one. Then batch the 9 medium groups. Then batch the 17 simple groups (these are all "swap the custom copy text" with the same Alumasteel construction).
-
-Once all 31 are confirmed, save all processing cards as individual files that I can hand to team members.</pre>
-    </div>
-  </details>
-
-  <details class="prompt-block">
-    <summary><span class="prompt-num">2</span>Team Member Processing<span class="prompt-who">Team · Cowork</span></summary>
-    <div class="prompt-body">
-      <p class="purpose">Purpose: A team member opens Cowork, gets one of these cards, and processes that variable group for a specific property order. No questions needed. Individual cards are generated by Prompt 1.</p>
-      <div class="prompt-actions"><button class="prompt-copy" data-target="prompt-2">Copy prompt</button></div>
-      <pre class="prompt-code" id="prompt-2">You are processing variable signage for a Fairfield Inn &amp; Suites property order.
+      <pre class="prompt-code" id="prompt-1">You are processing variable signage for a [INSERT BRAND NAME] property order.
 
 ## Your Processing Card
 
-[CARD CONTENT WILL BE INSERTED HERE — generated from Prompt 1 master session]
+[INSERT PROCESSING CARD CONTENT HERE — provided by your project manager. The card carries brand, era, SKUs, size, substrate, font, colour, braille, variable fields, and any conditional rules.]
 
-## What You Have
-- The property's sign schedule (provided by the project manager)
-- The source EPS artwork file(s) listed on this card
-- The E4 workbook for SKU reference
+## Files &amp; Paths
+- Source EPS artwork folder: [INSERT EPS FOLDER PATH HERE]
+- E4 workbook (SKU reference): [INSERT WORKBOOK FILE PATH HERE]
+- MSDQ (source of truth for dimensions): [INSERT MSDQ LINK HERE]
+- Property sign schedule: [INSERT PROPERTY SCHEDULE FILE PATH HERE]
+- Output folder for finished artwork: [INSERT OUTPUT FOLDER PATH HERE]
 
 ## What You Do
-1. Open the source EPS file
-2. For each sign on the property's schedule that matches this card's SKU(s):
-   a. Duplicate the source artwork
-   b. Replace the variable field(s) per the schedule
-   c. Follow all rules on this card (star placement, arrow direction, font, braille, etc.)
-   d. Save as: [SKU]_[PropertyCode]_[SequenceNumber].eps
-3. When complete, place all files in the property's output folder
+1. Open the source EPS file listed on the card.
+2. For each sign on the property schedule that matches this card's SKU(s):
+   a. Duplicate the source artwork.
+   b. Replace the variable field(s) per the schedule.
+   c. Follow every rule on the card (star placement, arrow direction, font, braille, etc.).
+   d. Save as: [SKU]_[PropertyCode]_[SequenceNumber].eps in the output folder.
+3. When complete, verify all files are in the output folder.
 
 ## Rules You Must Follow
-- Font, size, color, and braille specs on this card are mandatory — do not deviate
-- If the property schedule has content that doesn't fit the field constraints, flag it — do not guess
-- MSDQ is source of truth for dimensions
-- Do not modify static elements on the sign (logos, borders, fixed text)
+- Font, size, colour, and braille specs on the card are mandatory — do not deviate.
+- If the property schedule has content that doesn't fit the field constraints on the card, flag it in the chat — do not guess.
+- MSDQ is source of truth for dimensions.
+- Do not modify static elements on the sign (logos, borders, fixed text).
 
 ## When You're Done
-- Verify file count matches the property schedule line count for this sign type
-- Run a visual spot check: open 3 random files and verify copy, font, and braille match the card spec</pre>
-    </div>
-  </details>
-
-  <details class="prompt-block">
-    <summary><span class="prompt-num">3</span>Static Sign Batch Processing<span class="prompt-who">Claude Code</span></summary>
-    <div class="prompt-body">
-      <p class="purpose">Purpose: Batch-process all static signs. These have no variable fields — the artwork is the same for every property.</p>
-      <div class="prompt-actions"><button class="prompt-copy" data-target="prompt-3">Copy prompt</button></div>
-      <pre class="prompt-code" id="prompt-3">You are batch-processing static signs for the Fairfield Inn &amp; Suites "Calm" era signage program.
-
-## Reference
-- Dictionary: Fairfield_Calm_Sign_Type_Dictionary.md (attached)
-- MSDQ: FAIS_Calm_MSDQ_-_Stamped_v1.pdf
-- Workbook: E4 Assigned SKUs MASTER (Column A: MARRIOTT, Column B: FAIRFIELD INN &amp; SUITES)
-
-## Static Signs to Process
-
-All signs classified as STATIC in the dictionary. These have fixed artwork — no variable fields. Process by verifying the EPS file exists, matches the MSDQ DIGIT field, and the workbook description is accurate.
-
-### Interior Alumasteel Static Signs (Wilson Art #6277)
-| SKU | Description | MSDQ# | Line |
-|-----|------------|-------|------|
-| 2874 | Insert Holder 5×12¼ | FAILAW005012AA20 | 05 |
-| 2876 | Accessible Symbol 3×3 | FAIINF003003AA20 | 06 |
-| 2878 | Assistive Listening Device Symbol 3×3 | FAIINF003003AA20 | 06 |
-| 2882 | Depress Button for 5 Seconds 3¼×2⅛ | FAIKEY003002AA20 | 07 |
-| 2884 | Switch Turns Doorbell On/Off 3¼×2⅛ | FAIKEY003002AA20 | 07 |
-| 2886 | Master Switch 3¼×2⅛ | FAIKEY003002AA20 | 07 |
-| 2896 | Elevator Inspection Permit 8×5 | FAIINF008005BM2A | 12 |
-| 2909 | Fairfield Guarantee PSV | FAIPSV011005RV50 | 16 |
-| 2911 | The Market Letters | MTFMFA022007JM9A | 17 |
-| 2919 | TDD Available 10×8 | FAITDD010008AJ10 | 24 |
-| 2923 | Insert Holder 9⅝×12⅛ | FAIINS010012AA4A | 26 |
-| 2927 | Debit/Check Card Notice 8×6 | FAIBNT008006AM2N | 28 |
-| 2929 | Room ID - Guest Laundry 9×6 | FAIIDS009006AM10 | 29 |
-| 2931 | Room ID - Mechanical 9×6 | FAIIDS009006AM10 | 29 |
-| 2933 | Room ID - Elevator Equipment 9×6 | FAIIDS009006AM10 | 29 |
-| 2935 | Room ID - Exit 9×6 | FAIIDS009006AM10 | 29 |
-| 2937 | Room ID - Ice 9×6 | FAIIDS009006AM10 | 29 |
-| 2939 | Room ID - Electrical No Storage 9×6 | FAIIDS009006AM10 | 29 |
-| 2941 | Room ID - Stairs &amp; Exit 9×6 | FAIIDS009006AM10 | 29 |
-| 2951 | Room ID - Conference Room 11×6 | FAIIDS011006AM10 | 31 |
-| 2953 | Room ID - Housekeeping 11×6 | FAIIDS011006AM10 | 31 |
-| 2957 | Breakfast Hours 12×8 | FAIIDS012008AM10 | 32 |
-| 2959 | Pool Hours 12×8 | FAIIDS012008AM10 | 32 |
-| 2961 | Pool-Whirlpool Hours 12×8 | FAIIDS012008AM10 | 32 |
-| 2965 | Vinyl Glass Backer 12×8 | FAIINF012008AV50 | 33 |
-| 2967 | Meeting Room A Insert | FAIINS007012CA1A | 34A |
-| 2969 | Meeting Room Insert | FAIINS007012CA1A | 34A |
-| 2975 | Restroom - Women 7¾×7¾ | FAIRES008008AM10 | 36 |
-| 2977 | Restroom - Men 7¾×7¾ | FAIRES008008AM10 | 36 |
-| 2979 | Restroom - Unisex 7¾×7¾ | FAIRES008008AM10 | 36 |
-| 2981 | Cycle Times 9×6 | FAIINF009006AM20 | 37 |
-| 2983 | Dial 0/911 9×6 | FAIINF009006AM20 | 37 |
-| 2985 | Employees Must Wash Hands 9×6 | FAIINF009006AM20 | 37 |
-| 2993 | Door Locked/Key Card 10×7 | FAIKEY010007AA20 | 39 |
-| 2995 | Key Card/Ring Bell 10×7 | FAIKEY010007AA20 | 39 |
-| 2999 | Vinyl Glass Backer 10×7 | FAIINF010007AV50 | 40 |
-| 3001 | Use Guest Room Key Card 3¼×2⅛ | FAIKEY003002AA20 | 41 |
-| 3021 | No Pets 9×6 | FAIINF009006AM20 | 46 |
-| 3023 | Laundry Supplies 9×6 | FAIINF009006AM20 | 46 |
-| 3027 | Projection - Restrooms 8⅞×8 | FAIPRO009008AM2M | 47 |
-| 3099 | Projection - Elevator/Ice 11⅞×5 | FAIPRO012005AM2X | 69 |
-| 3105 | Accessible Entrance w/Symbol 9×6 | FAIACC009006AA60 | 72 |
-| 3111 | Paper 5×1½ | FAIINF005002AM20 | 73 |
-| 3113 | Plastic 5×1½ | FAIINF005002AM20 | 73 |
-| 3115 | Trash 5×1½ | FAIINF005002AM20 | 73 |
-| 3119 | Area of Rescue Assistance 7×9⅞ | FAIACC007010AM10 | 75 |
-| 3125 | Fitness Acrylic w/Braille 4¾×2⅜ | FAIIDS005002VA10 | 79 |
-| 3133 | Don't Wish for IT Acrylic 84×4 | FAICOA084004EA90 | 81 |
-| 3137 | Fitness Center Use 20×19 | FAIFIT020019AM20 | 82 |
-| 3141 | AED Warning 10×10 | FAIAED010010AA20 | 83 |
-| 3163 | Smoke Free Building 8×5 | FAINSM008005BM2A | 89 |
-
-### Exterior/Pool Static Signs (PMS-877-MA Brushed Aluminum)
-| SKU | Description | MSDQ# | Line |
-|-----|------------|-------|------|
-| 2900 | Parking Notice - Wall 16×16 | FAIPRK016016AN20 | 13 |
-| 2902 | Parking Notice - Post 16×16 | FAIPRK016016AN20 | 13 |
-| 2904 | Guest Reg Parking - Wall 12×18 | FAIPRK012018BA50 | 14 |
-| 2906 | Guest Reg Parking - Post 12×18 | FAIPRK012018BA50 | 14 |
-| 2945 | Ext Room ID - Pool Equipment 9×6 | FAIEXT009006AJ10 | 30 |
-| 2947 | Ext Room ID - Exit 9×6 | FAIEXT009006AJ10 | 30 |
-| 3053 | Ext Pool Hours 12×8 | FAIEXT012008AJ10 | 57 |
-| 3055 | Ext Pool-Whirlpool Hours 12×8 | FAIEXT012008AJ10 | 57 |
-| 3059 | Pool Open/Closed Slider 10×7 | FAISLI010007AJ1A | 58 |
-| 3061 | Pool Logo - Fairfield by Marriott 10×7 | FAILOG010007AA20 | 59 |
-| 3063 | Pool Area Use - Wall 23×23 | FAIPOL023023AN20 | 60 |
-| 3065 | Pool Area Use - Fence 23×23 | FAIPOL023023AN20 | 60 |
-| 3067 | No Lifeguard - Wall 42×13 | FAINLG042013AN20 | 61 |
-| 3069 | No Lifeguard - Fence 42×13 | FAINLG042013AN20 | 61 |
-| 3071 | Warning No Diving - Wall 14×14 | FAIWND014014AN20 | 62 |
-| 3073 | Warning No Diving - Fence 14×14 | FAIWND014014AN20 | 62 |
-| 3075 | Ext Dial 0/911 9×6 | FAIEXT009006AA20 | 63 |
-| 3079 | Whirlpool Spa Use - Wall 23×23 | FAISPA023023AN20 | 64 |
-| 3081 | Whirlpool Spa Use - Fence 23×23 | FAISPA023023AN20 | 64 |
-| 3083 | Spa Timer - Wall 4×6 | FAISPA004006AA20 | 65 |
-| 3085 | Spa Timer - Fence 4×6 | FAISPA004006AA20 | 65 |
-| 3087 | Emergency Shutoff - Wall 5½×4 | FAIEXT006004AA20 | 66 |
-| 3089 | Emergency Shutoff - Fence 5½×4 | FAIEXT006004AA20 | 66 |
-| 3091 | Mouth-to-Mouth - Wall 23×23 | FAIM2M023023AN20 | 67 |
-| 3093 | Mouth-to-Mouth - Fence 23×23 | FAIM2M023023AN20 | 67 |
-| 3095 | No Diving Strip - Wall 32×6 | FAIPOL032006AN50 | 68 |
-| 3097 | No Diving Strip - Fence 32×6 | FAIPOL032006AN50 | 68 |
-| 3123 | Pool Lift 14×14 | FAIPOL014014GA20 | 76 |
-| 3153 | Ext Restroom - Men 7¾×7¾ | FAIEXT008008AJ10 | 86 |
-| 3155 | Ext Restroom - Women 7¾×7¾ | FAIEXT008008AJ10 | 86 |
-| 3157 | Ext Restroom - Unisex 7¾×7¾ | FAIEXT008008AJ10 | 86 |
-| 3159 | All-Gender Restroom 7¾×9 | FAIAGR008009AM10 | 87 |
-| 3161 | All-Gender Restroom 9×6 | FAIAGR009006AM10 | 88 |
-
-### Specialty Static Signs
-| SKU | Description | MSDQ# | Line |
-|-----|------------|-------|------|
-| 90182 | Exterior Bronze Plaque 6×4 | FAIEXT006004BM10 | 85 |
-
-### Rowmark Static Signs (2 colorways each)
-| SKU | Description | MSDQ# | Colorway |
-|-----|------------|-------|----------|
-| 3167 | Deliveries | F25RWM010002CA90 | Aluminum/Black (dark millwork) |
-| 3169 | Deliveries | F25RWM010002AA90 | Iron Ore (light millwork) |
-| 3171 | Essentials | F25RWM010002DA90 | Aluminum/Black |
-| 3173 | Essentials | F25RWM010002BA90 | Iron Ore |
-| 3175 | Recycling Symbol | F25RWM002002CA90 | Aluminum/Black |
-| 3177 | Recycling Symbol | F25RWM002002AA90 | Iron Ore |
-| 3179 | Trash Can Symbol | F25RWM002002DA90 | Aluminum/Black |
-| 3181 | Trash Can Symbol | F25RWM002002BA90 | Iron Ore |
-
-### Cross-Brand Static Signs (shared across Marriott brands — verify from inventory)
-| SKU | Description | MSDQ# | Line |
-|-----|------------|-------|------|
-| 88581 | Turn to Deadbolt Vinyl | CFRPSV003001AV50 | 08 |
-| 88582 | Sprinkler Warning | CFRINF003003AN20 | 09 |
-| 88583 | Hot Glass Door Notice | MARHOT004002AN60 | 74 |
-| 88586 | Vinyl Label | CFRPSV006003BV50 | 10 |
-
-## Processing Steps
-1. For each SKU above, verify the source EPS file exists and filename matches the MSDQ DIGIT field
-2. Verify the workbook description matches the sign content
-3. Verify dimensions match MSDQ stated size
-4. Flag any discrepancies — do not auto-correct
-5. Generate a verification report listing: SKU, EPS filename, status (OK / MISMATCH / MISSING)</pre>
-    </div>
-  </details>
-
-  <details class="prompt-block">
-    <summary><span class="prompt-num">4</span>QA Validation<span class="prompt-who">Elaine · Cowork</span></summary>
-    <div class="prompt-body">
-      <p class="purpose">Purpose: After team members have processed variable signs and Claude Code has handled static signs, run a final validation pass.</p>
-      <div class="prompt-actions"><button class="prompt-copy" data-target="prompt-4">Copy prompt</button></div>
-      <pre class="prompt-code" id="prompt-4">You are running QA validation on processed Fairfield Inn &amp; Suites "Calm" era signage for a property order.
-
-## Reference Files
-- Dictionary: Fairfield_Calm_Sign_Type_Dictionary.md
-- MSDQ: FAIS_Calm_MSDQ_-_Stamped_v1.pdf
-- Property sign schedule: [ATTACHED]
-- Processed artwork folder: [PATH]
-
-## Validation Checklist
-
-### 1. Completeness Check
-- Count all processed files in the output folder
-- Cross-reference against the property sign schedule
-- Flag any SKUs on the schedule that have no corresponding output file
-- Flag any output files that don't match a schedule SKU
-
-### 2. Variable Sign Spot Check (sample 20% or minimum 5 signs)
-For each sampled sign:
-- [ ] Correct SKU in filename
-- [ ] Variable field content matches schedule
-- [ ] Font matches card spec (especially stairwell signs — must be Swis721/Swiss 721, NOT Arial)
-- [ ] Copy color correct
-- [ ] Braille present where required
-- [ ] Star (★) present on exit discharge signs only
-- [ ] Arrow direction correct on directional/stairwell signs
-- [ ] Dimensions match MSDQ
-
-### 3. Static Sign Verification
-- [ ] All static SKUs from schedule are present in output
-- [ ] No static signs have been modified (compare against source EPS)
-
-### 4. Cross-Brand Items
-- [ ] SKUs 88581, 88582, 88583, 88586 pulled from inventory (not regenerated)
-
-### 5. Stairwell-Specific Checks
-- [ ] Level ID (STR-SM): Star only on exit discharge level, correct level number
-- [ ] Large stairwell (STR-LG): Star only on exit discharge face, correct stair letter, direction text matches number of floors, arrow direction correct
-- [ ] Font is Swis721 Cn BT Bold / Swiss 721 Md BT Medium (NOT package font)
-
-### 6. FEP/Fire Evacuation Checks
-- [ ] Floor plan artwork is property-specific (not generic)
-- [ ] "You Are Here" dot correctly positioned
-- [ ] Exit arrows in correct red (PMS 485C for PETG, TP-141-1-H for Alumasteel)
-- [ ] Room numbers match property layout
-
-### 7. Directional Checks
-- [ ] Line count matches the correct sign size
-- [ ] Arrow directions match property layout
-- [ ] Copy is legible at stated font size
-
-### 8. Workbook Corrections (apply if not already done)
-| SKU | Field | Current | Corrected |
-|-----|-------|---------|-----------|
-| 3037 | Width | 8.875 | 12 |
-| 3037 | Height | 7.875 | 5.625 |
-| 3039 | Width | 8.875 | 12 |
-| 3039 | Height | 7.875 | 5.625 |
-
-## Output
-Produce a QA report with:
-- Total signs processed vs schedule count
-- Pass/fail per validation category
-- List of specific issues found (if any)
-- Sign-off recommendation: APPROVED / APPROVED WITH NOTES / REQUIRES REWORK</pre>
-    </div>
-  </details>
-
-  <details class="prompt-block">
-    <summary><span class="prompt-num">5</span>Workbook Corrections<span class="prompt-who">Standalone</span></summary>
-    <div class="prompt-body">
-      <p class="purpose">Purpose: Apply confirmed corrections to the E4 workbook. Run independently.</p>
-      <div class="prompt-actions"><button class="prompt-copy" data-target="prompt-5">Copy prompt</button></div>
-      <pre class="prompt-code" id="prompt-5">## Fairfield Inn &amp; Suites — Workbook Corrections
-
-Apply these corrections to E4 Assigned SKUs MASTER:
-- Column A: MARRIOTT
-- Column B: FAIRFIELD INN &amp; SUITES
-
-### Width/Height Column Corrections
-These 2 SKUs have incorrect dimensions in the workbook. The MSDQ (source of truth) states 12" W × 5-5/8" H, and the DIGIT code (FF19DR012006AM2S) decodes to 12×6. Correct the workbook W/H columns:
-
-| SKU | Column | Current Value | Corrected Value |
-|-----|--------|--------------|-----------------|
-| 3037 | Width | 8.875 | 12 |
-| 3037 | Height | 7.875 | 5.625 |
-| 3039 | Width | 8.875 | 12 |
-| 3039 | Height | 7.875 | 5.625 |
-
-No other corrections required. All descriptions have correct "Fairfield Inn &amp; Suites" prefix. No DIGIT discrepancies found.</pre>
+- Verify file count matches the property schedule line count for this sign type.
+- Run a visual spot check: open 3 random files and confirm copy, font, and braille match the card spec.
+- Report back with: file count, any flags, and any files you couldn't complete.</pre>
     </div>
   </details>
 
   <div class="callout info">
     <span class="ico">💡</span>
-    <span><strong>Tip</strong> — Prompts 1 and 4 run in the same Cowork session for Elaine. Prompt 2 is generated per-card by Prompt 1 and handed to team members. Prompt 3 runs in Claude Code against the local EPS library. Prompt 5 is standalone whenever the workbook needs touching.</span>
+    <span><strong>Tip</strong> — If anything on the card is unclear, stop and message your project manager before guessing. The card is meant to be self-contained; a gap in the card is worth flagging.</span>
   </div>
 </section>
+
 
 
 <!-- ═══ 4. BOUNDING BOX REFERENCE ═══ -->
