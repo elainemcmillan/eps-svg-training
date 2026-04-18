@@ -1760,14 +1760,6 @@ arr[dilated > 0] = brand['face_bg_rgb']</pre>
     <span><strong>Don't try to run the pipeline in Chat.</strong> Chat Claude has no access to your file system — it can't read EPS files, write SVG outputs, or run Python. Attempting to run pipeline tasks in Chat will result in Claude generating placeholder code it can't actually execute. Use Cowork for any task involving files.</span>
   </div>
 
-  <h3>Cowork Session Startup</h3>
-  <p>When opening a new Cowork session for pipeline processing, tell Claude:</p>
-  <div class="card">
-    <p style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#3F3F46;margin:0;line-height:1.8;">
-      "I need to process the [Brand Name] EPS folder. The EPS files are at [path]. The MSDQ is at [path]. The E4 workbook is at [path]. The output folder is at [path]. The sign dictionary for this brand is [loaded/needs to be built]. Please start with Step 1 and process SKUs [list or range]."
-    </p>
-  </div>
-
   <div class="compare" style="margin-top:16px;">
     <div class="col">
       <div class="col-head blue">✓ Chat is right for</div>
