@@ -302,29 +302,48 @@ details[open] summary::after{content:'－';color:var(--accent);}
   </div>
 
   <h3>System Tool Checklist</h3>
+  <p style="font-size:13px;color:var(--muted);margin-bottom:10px;">Install each of the following before your first pipeline session. Click the download link to grab the Windows installer. On macOS / Linux, use the command shown under each item instead.</p>
   <ul class="checklist">
     <li>
       <span class="check"></span>
-      <span class="label"><strong>Ghostscript</strong> (<code>gs</code>)
-        <span class="sub">Converts EPS → PDF. Install via: <code>apt-get install -y ghostscript</code></span>
+      <span class="label"><strong>Claude Desktop</strong> — runs Cowork sessions, the tool you'll spend your day in
+        <span class="sub"><a href="https://claude.ai/download" target="_blank" rel="noopener">Download Claude Desktop (Windows / macOS)</a> · Sign in with your <code>identitygroup.com</code> account after install.</span>
       </span>
     </li>
     <li>
       <span class="check"></span>
-      <span class="label"><strong>Poppler / pdftocairo</strong>
-        <span class="sub">Converts PDF → raw SVG. Install via: <code>apt-get install -y poppler-utils</code></span>
+      <span class="label"><strong>Python 3.11+</strong> — required for <code>pip</code>, the pipeline scripts, and the Python packages below
+        <span class="sub"><a href="https://www.python.org/downloads/" target="_blank" rel="noopener">Download Python (python.org)</a> · During install, check "Add Python to PATH". macOS / Linux: <code>brew install python</code> or <code>apt-get install -y python3 python3-pip</code>.</span>
       </span>
     </li>
     <li>
       <span class="check"></span>
-      <span class="label"><strong>Python packages</strong>
-        <span class="sub"><code>pip install fontTools Pillow cairosvg pdfplumber python-docx --break-system-packages</code></span>
+      <span class="label"><strong>Ghostscript</strong> (<code>gs</code>) — converts EPS → PDF
+        <span class="sub"><a href="https://www.ghostscript.com/releases/gsdnld.html" target="_blank" rel="noopener">Download Ghostscript (AGPL release)</a> · macOS / Linux: <code>brew install ghostscript</code> or <code>apt-get install -y ghostscript</code>.</span>
       </span>
     </li>
     <li>
       <span class="check"></span>
-      <span class="label"><strong>Brand fonts installed at <code>~/.fonts/</code></strong>
-        <span class="sub">Run <code>fc-cache -f ~/.fonts</code> after adding fonts. See brand reference file for which fonts are required.</span>
+      <span class="label"><strong>Poppler / pdftocairo</strong> — converts PDF → raw SVG
+        <span class="sub"><a href="https://github.com/oschwartz10612/poppler-windows/releases/" target="_blank" rel="noopener">Download Poppler for Windows (oschwartz10612 build)</a> · Unzip, add the <code>Library\bin</code> folder to your PATH. macOS / Linux: <code>brew install poppler</code> or <code>apt-get install -y poppler-utils</code>.</span>
+      </span>
+    </li>
+    <li>
+      <span class="check"></span>
+      <span class="label"><strong>Inkscape</strong> — used by Step 9b to generate the <code>.ai</code> production file via the Inkscape CLI (preferred method)
+        <span class="sub"><a href="https://inkscape.org/release/" target="_blank" rel="noopener">Download Inkscape (Windows / macOS / Linux)</a> · After install, confirm <code>inkscape --version</code> works from a terminal.</span>
+      </span>
+    </li>
+    <li>
+      <span class="check"></span>
+      <span class="label"><strong>Python packages</strong> — run after Python is installed
+        <span class="sub"><code>pip install fontTools Pillow cairosvg pdfplumber python-docx openpyxl pikepdf</code> · Add <code>--break-system-packages</code> on Linux if pip rejects the install.</span>
+      </span>
+    </li>
+    <li>
+      <span class="check"></span>
+      <span class="label"><strong>Brand fonts installed system-wide</strong>
+        <span class="sub">Download from the <a href="https://identitygroup1.sharepoint.com/sites/EPStoSVGTraining/Shared%20Documents/Fonts" target="_top">Fonts folder</a>. Windows: right-click each <code>.ttf</code> / <code>.otf</code> → <strong>Install for all users</strong>. macOS: double-click → <strong>Install Font</strong>. Linux: copy to <code>~/.fonts/</code> and run <code>fc-cache -f ~/.fonts</code>. See the brand reference for which fonts each brand requires.</span>
       </span>
     </li>
   </ul>
