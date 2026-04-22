@@ -255,7 +255,6 @@ details[open] summary::after{content:'－';color:var(--accent);}
   <a href="#requirements" class="active">Requirements</a>
   <a href="#files-uploads">Files &amp; Uploads</a>
   <a href="#pipeline">Pipeline Steps</a>
-  <a href="#prompts">Prompts</a>
   <a href="#bbox">Bounding Box Reference</a>
   <a href="#outputs">Outputs</a>
   <a href="#troubleshooting">Troubleshooting</a>
@@ -518,56 +517,6 @@ details[open] summary::after{content:'－';color:var(--accent);}
 </section>
 
 
-<!-- ═══ 3.5 PROMPTS ═══ -->
-<section id="prompts">
-  <h2><span class="icon">💬</span>Prompts — Team Member Workflow</h2>
-  <p>When you're assigned a processing card by your project manager, use the prompt below. Paste your card content into the placeholder, fill in the file paths, and send it to Cowork. The prompt is brand-agnostic — the card itself carries all brand, era, and substrate specs.</p>
-
-  <details class="prompt-block" open>
-    <summary><span class="prompt-num">1</span>Team Member Processing<span class="prompt-who">Team · Cowork</span></summary>
-    <div class="prompt-body">
-      <p class="purpose">Purpose: Process one variable sign group for a property order using the processing card your project manager gave you. Fill in every placeholder in square brackets before sending.</p>
-      <div class="prompt-actions"><button class="prompt-copy" data-target="prompt-1">Copy prompt</button></div>
-      <pre class="prompt-code" id="prompt-1">You are processing variable signage for a [INSERT BRAND NAME] property order.
-
-## Your Processing Card
-
-[INSERT PROCESSING CARD CONTENT HERE — provided by your project manager. The card carries brand, era, SKUs, size, substrate, font, colour, braille, variable fields, and any conditional rules.]
-
-## Files &amp; Paths
-- Source EPS artwork folder: [INSERT EPS FOLDER PATH HERE]
-- E4 workbook (SKU reference): [INSERT WORKBOOK FILE PATH HERE]
-- MSDQ (source of truth for dimensions): [INSERT MSDQ LINK HERE]
-- Property sign schedule: [INSERT PROPERTY SCHEDULE FILE PATH HERE]
-- Output folder for finished artwork: [INSERT OUTPUT FOLDER PATH HERE]
-
-## What You Do
-1. Open the source EPS file listed on the card.
-2. For each sign on the property schedule that matches this card's SKU(s):
-   a. Duplicate the source artwork.
-   b. Replace the variable field(s) per the schedule.
-   c. Follow every rule on the card (star placement, arrow direction, font, braille, etc.).
-   d. Save as: [SKU]_[PropertyCode]_[SequenceNumber].eps in the output folder.
-3. When complete, verify all files are in the output folder.
-
-## Rules You Must Follow
-- Font, size, colour, and braille specs on the card are mandatory — do not deviate.
-- If the property schedule has content that doesn't fit the field constraints on the card, flag it in the chat — do not guess.
-- MSDQ is source of truth for dimensions.
-- Do not modify static elements on the sign (logos, borders, fixed text).
-
-## When You're Done
-- Verify file count matches the property schedule line count for this sign type.
-- Run a visual spot check: open 3 random files and confirm copy, font, and braille match the card spec.
-- Report back with: file count, any flags, and any files you couldn't complete.</pre>
-    </div>
-  </details>
-
-  <div class="callout info">
-    <span class="ico">💡</span>
-    <span><strong>Tip</strong> — If anything on the card is unclear, stop and message your project manager before guessing. The card is meant to be self-contained; a gap in the card is worth flagging.</span>
-  </div>
-</section>
 
 
 
@@ -1890,10 +1839,14 @@ arr[dilated > 0] = brand['face_bg_rgb']</pre>
   <details open>
     <summary>eps-to-svg — Main conversion pipeline</summary>
     <div class="details-body">
-      <p><strong>What it does:</strong> Converts signage <code>.eps</code> files into Brandography-ready <code>.svg</code> files for the Shopify live preview. Produces the full 4 or 5 file deliverable set (vector SVG, preview-vector, raster PNG, fields.json, FIELD_ANCHORS_Review.html).</p>
+      <p><strong>What it does:</strong> Converts signage <code>.eps</code> files into Brandography-ready <code>.svg</code> files for the Shopify live preview. Produces the full 4 or 5 file deliverable set (vector SVG, preview-vector, raster PNG, fields.json, FIELD_ANCHORS_Review.html) plus an optional <code>.ai</code> production file.</p>
       <p><strong>When Claude loads it:</strong> Any time you ask to convert EPS files to SVG, process a signage folder, prepare files for Brandography, or use phrases like "process the rest of the folder", "convert these signs", "run this on all the files", or "make SVGs from the EPS files."</p>
-      <p><strong>What it encodes:</strong> All 15 pipeline steps; structure-preserving XML tree walk approach; sign category classification (FOH/BOH/COA/illuminated/decal); face detection nesting method; bbox formula (cap_height + 1.5pt); anchor point requirements; font embedding; REVIEW SVG rules; quality audit scripts; AI production file generation.</p>
+      <p><strong>What it encodes:</strong> All pipeline steps (1 → 13, plus 1d clip-mask and 9b <code>.ai</code> generation); structure-preserving XML tree walk approach; sign category classification (FOH/BOH/COA/illuminated/decal); face detection nesting method; bbox formula (cap_height + 1.5pt); anchor point requirements; font embedding; REVIEW SVG rules; self-audit + brand-delivery checks; <code>.ai</code> production file via Inkscape CLI (preferred), Illustrator JSX, or cairosvg PDF fallback.</p>
       <p><strong>Output:</strong> 5 files for variable signs, 4 for static. See the Outputs section of this guide for the full spec.</p>
+      <div class="callout info" style="margin-top:10px;">
+        <span class="ico">ℹ️</span>
+        <span><strong>Script-vs-standard note</strong> — the current convert script is Motel 6 / Studio 6 specific. The general multi-brand standard documented in the skill is the source of truth; script gaps (face detection, static signs, multi-face EPS, PNG rendering, output filenames, fields.json schema) are being resolved as each brand is run.</span>
+      </div>
       <div class="callout warn" style="margin-top:10px;">
         <span class="ico">⚠️</span>
         <span>This skill works in <strong>Cowork only</strong> — it needs file system access to read EPS files and write SVG outputs. Running it in Chat will produce code that cannot execute.</span>
@@ -1935,9 +1888,9 @@ arr[dilated > 0] = brand['face_bg_rgb']</pre>
   <details>
     <summary>brand-sku-generator — Full SKU assignment workflow</summary>
     <div class="details-body">
-      <p><strong>What it does:</strong> End-to-end SKU workflow for any brand — reads the MSDQ PDF to extract sign specs, checks the E4 workbook for existing entries, assigns new material codes sequentially, writes new rows to the workbook, renames .eps and .jpg files to their new codes, and saves a new versioned workbook. Also handles multi-colorway description assignment and validation.</p>
-      <p><strong>When Claude loads it:</strong> "Add SKUs for [brand]", "process this folder", "rename the files for [brand]", "repeat this process for [brand]", "apply colorway descriptions", "validate descriptions", or any message with a folder path + PDF for a signage brand.</p>
-      <p><strong>Brands with reference files built:</strong> Wyndham, Wyndham Garden, Wyndham Multi-Brand RMN, Home2 Suites, Home2 Bamboo, Hampton Inn, Clarion, Comfort Inn &amp; Suites, Hilton Garden Inn (Magnolia / Boho / Elevate / Urban), La Quinta, Marriott, Suburban Studios.</p>
+      <p><strong>What it does:</strong> End-to-end SKU workflow for any brand — reads the MSDQ PDF to extract sign specs, checks the E4 workbook for existing entries, assigns new material codes sequentially, writes new rows to the workbook, renames .eps and .jpg files to their new codes, and saves a new versioned workbook. Also handles multi-colorway description assignment and validation, and can port changes across workbook versions.</p>
+      <p><strong>When Claude loads it:</strong> "Add SKUs for [brand]", "process this folder", "rename the files for [brand]", "repeat this process for [brand]", "apply colorway descriptions", "validate descriptions", or any message with a folder path + PDF for a signage brand. Also loads when rechecking or updating a brand that already has partial entries.</p>
+      <p><strong>Brand references:</strong> Each brand gets its own <code>references/{brand}.md</code> file with colorway rules, font sizes, and special cases. Brand references live inside the skill — ask Claude "do we have a reference for [brand]?" before a run.</p>
       <div class="callout danger" style="margin-top:10px;">
         <span class="ico">🚨</span>
         <span><strong>Never assign SKU numbers without Elaine's explicit authorization.</strong> Elaine assigns the starting number and approves sequential use. This skill enforces that rule — it will ask before assigning if no authorization is present in the session.</span>
@@ -1983,6 +1936,11 @@ arr[dilated > 0] = brand['face_bg_rgb']</pre>
   <table class="file-table">
     <thead><tr><th>Skill</th><th>What it does</th><th>When to use</th></tr></thead>
     <tbody>
+      <tr>
+        <td><strong>setup-cowork</strong></td>
+        <td>Guided first-time Cowork setup — walks through role, installs a matching plugin, helps you try a skill, and wires up the connectors (email, calendar, docs) your skills will draw from.</td>
+        <td><strong>Start here if you're new to Claude or Cowork.</strong> Run it once on your first day to get your workspace configured before any pipeline work.</td>
+      </tr>
       <tr>
         <td><strong>skill-creator</strong></td>
         <td>Create new skills, modify and improve existing skills, run evals to measure skill performance and triggering accuracy.</td>
